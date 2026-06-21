@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21st Handong Film Festival</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+		}
+
+		:root{
+			--hdff-burgundy:#9c1f25;
+			--hdff-background:#ffffff;
+		}
+
+		body{
+			background:var(--hdff-background);
+			font-family:Arial, Helvetica, sans-serif;
+		}
+
+		header{
+			background:#ffffff;
+			color:white;
+			margin-top:0;
+		}
+
+		.top-menu i{font-size:16px;}
+
+    
+		.top-icons{
+			display:flex;
+			align-items:center;
+			gap:18px;
+		}
+
+    
+		.hgu-logo{
+			height:20px;
+			width:auto;
+		}
+    
+    
+		.navbar{
+			background:#9c1f25;
+			display:flex;
+			align-items:center;
+			height:70px;
+			padding:0 20px;
+			margin-top:4px;
+		}
+
+    
+		.logo-section{
+			display:flex;
+			align-items:center;
+			gap:18px;
+			margin-left:0px;
+		}
+
+		.logo-section img{height:55px;}
+
+		.banner{
+			width: 100%;
+			display: block;
+		}
+
+		.title h2{
+			font-size:20px;
+			font-weight:600;
+		}
+
+    
+		.title p{
+			font-size:16px;
+			font-weight:400;
+		}
+
+		.menu{
+			list-style:none;
+			display:flex;
+			gap:40px;
+			margin-left:auto;
+		}
+
+    
+		.menu a{
+			color:white;
+			text-decoration:none;
+			font-size:14px;
+			font-weight:400;
+			letter-spacing:0.5px;
+			transition:0.3s;
+		}
+
+		.menu a:hover{opacity:0.7;}
+
+		.side-menu{
+			position:absolute;
+			top:115px;
+			left:0;
+			width:100%;
+			background:white;
+			padding:40px 50px;
+			display:grid;
+			grid-template-columns:repeat(4,1fr);
+			transform:translateY(-20px);
+			opacity:0;
+			pointer-events:none;
+			transition:0.3s;
+			z-index:999;
+		}
+    
+		.side-menu.active{
+			transform:translateY(0);
+			opacity:1;
+			pointer-events:auto;
+		}
+    
+		.side-menu.active{display:grid;}
+    
+		.menu-column h2{
+			color:#9c1f25;
+			margin-bottom:20px;
+		}
+
+		.menu-column a{
+			display:block;
+			color:#9c1f25;
+			text-decoration:none;
+			margin-bottom:15px;
+		}
+		
+		.menu-column a:hover{font-weight:bold;}
+    
+		#menuBtn{cursor:pointer;}
+
+		#movie-list-container{
+			display:flex;
+			flex-wrap:wrap;
+			justify-content:center;
+			gap:40px;
+			margin:80px auto;
+		}
+    
+		.puzzle-box{
+			display:flex;
+			width:640px;
+			height:360px;
+		}
+
+		.box-left{
+			flex:3;
+			background-size:cover;
+			background-position:center;
+			border-radius:25px 0 0 25px;
+		}
+
+    
+		.box-right{
+			flex:2;
+			background:#9c1f25;
+			color:white;
+			border-radius:0 25px 25px 0;
+			display:flex;
+			flex-direction:column;
+			justify-content:center;
+			padding:30px;
+			position:relative;
+		}
+
+		.box-right::before{
+			content:"";
+			position:absolute;
+			left:-20px;
+			top:50%;
+			transform:translateY(-50%);
+			width:20px;
+			height:40px;
+			background:#9c1f25;
+			border-radius:40px 0 0 40px;
+		}
+
+		.box-left, .box-right{transition:0.3s;}
+
+		.puzzle-box:hover .box-left, 
+		.puzzle-box:hover .box-right{
+			filter:blur(4px);
+			opacity:0.6;
+		}
+
+		.puzzle-box .box-left:hover, 
+		.puzzle-box .box-right:hover{
+			filter:none;
+			opacity:1;
+			transform:scale(1.05);
+		}
+
+		footer{
+			background:#ffffff;
+			color:#9c1f25;
+			margin-top:60px;
+			border-top:1px solid #9c1f25;
+			padding-top:20px;        
+			margin-left:30px;           
+			margin-right:30px;
+		}
+
+		.footer-container{
+			max-width:95%;
+			margin:auto;
+			padding:18px 12px 5px 12px;
+			display:grid;
+			grid-template-columns:repeat(3,1fr);
+			gap:20px;
+		}
+
+		.footer-container h3{
+			margin-bottom:20px;
+			font-size:15px;
+		}
+
+		.footer-container p{
+			margin-bottom:10px;
+			line-height:1.6;
+			font-size:12px;
+		}
+
+		.footer-container a{
+			color:#9c1f25;
+			text-decoration:none;
+			font-size:12px;
+		}
+
+		.footer-container a:hover{opacity:0.7;}
+    
+		.copyright{
+			text-align:right;
+			padding:8px 20px 12px 20px;
+			font-size:12px;
+			color:#9c1f25;
+			border-top:none;
+		}
+
+		#menuBtn{
+			color:white;
+			font-size:18px;
+			cursor:pointer;
+			margin-left:25px;
+		}
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="side-menu" id="sideMenu">
+            <div class="menu-column">
+                <h2>역사</h2>
+                <a href="HDFFhistory.html">HDFF 소개글</a>
+                <a href="HDFFhistory.html">개요</a>
+                <a href="HDFFhistory.html">역대 주제</a>
+                <a href="HDFFhistory.html">역대 대표작</a>
+            </div>
+
+            <div class="menu-column">
+                <h2>소개</h2>
+                <a href="상영작 페이지.html">나는 왜 토마토에 맞았을까</a>
+                <a href="상영작 페이지.html">블루프린트</a>
+                <a href="상영작 페이지.html">산타가 도착했습니다!</a>
+                <a href="상영작 페이지.html">여름 온난화</a>
+                <a href="상영작 페이지.html">여름의 하루</a>
+                <a href="상영작 페이지.html">파란</a>
+            </div>
+
+            <div class="menu-column">
+                <h2>앨범</h2>
+                <a href="album.html">상영작 스틸컷</a>
+            </div>
+
+            <div class="menu-column">
+                <h2>평점</h2>
+                <a href="review.html">전체 평점</a>
+            </div>
+        </div>
+
+        <nav class="navbar">
+
+            <div class="logo-section">
+                <img src="used photo/HDFF.png" alt="HDFF Logo">
+
+                <div class="title">
+                    <h2>21st HANDONG</h2>
+                    <p>Film Festival</p>
+                </div>
+
+            </div>
+
+            <ul class="menu">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="HDFFhistory.html">HISTORY</a></li>
+                <li><a href="상영작 페이지.html">ABOUT</a></li>
+                <li><a href="album.html">ALBUM</a></li>
+                <li><a href="review.html">REVIEW</a></li>
+            </ul>
+
+            <i class="fa-solid fa-bars" id="menuBtn"></i>
+        </nav>
+    </header>
+    
+    <img src="used photo/Banner.png" alt="상영작 페이지 배너" class="banner">
+
+
+    <h3 style="text-align: center; margin-top: 50px;">HDFF 상영작 리스트</h3> <br><br>
+
+    <div id="movie-list-container"></div>
+    
+    <script>
+        // 상영작 데이터 (여기만 계속 추가/수정하면 됨)
+
+        const movies = [
+            { title: "파란 <br> 진호수, 19'01", desc: "꿈과 현실 속 고민하는 청년들의 <br>모습을 그려보고 싶었습니다.<br>오늘도 비참함을 무릅쓰고 <br>정진하는 그대여 화이팅", image: "used photo/파란.gif" },
+            { title: "여름의 하루 <br> 신예준, 17'25", desc: "평범한 대학생 '하루'가 <br> 기억을 잃은 귀신 '여름'의 기억을 <br>찾아주며, 점점 설명할 수 없는 <br>사건들과 마주하게 되는 이야기", image: "used photo/여름의 하루.gif" },
+            { title: "여름온난화 <br> 최민혁, 26'54", desc: "냄새에 예민한 '여름'은 <br>뜨겁게 살아가는 청춘, '하온'을 만나,<br>피하고 싶던 세상과 마주하게 된다.<br>우리는 이 뜨거운 여름을 <br>어떻게 버텨야할까", image: "used photo/여름 온난화.gif" },
+            { title: "산타가 도착했습니다! <br> 김가원, 33'54", desc: "크리스마스 이브, <br>실수로 누락된 위시리스트 때문에 <br> 엉뚱한 선물을 들고 나타난 <br>초보 산타와 외로운 직장인 소원<br>부족한 두 사람의 <br>특별한 크리스마스 이야기", image: "used photo/산타가 도착했습니다!.gif" },
+            { title: "블루프린트 <br> Rhema, 13'00", desc: "대상 수상이라는 성공 뒤에 <br>숨겨진 지독한 공허함 <br>건축학도 현택은 세상이 그린 지도를 <br>내려놓고, 태초부터 계획된 자신을 향한 청사진(Blueprint)을 따라 <br> 미지의 광야로 걸음을 내딛는다.", image: "used photo/블루프린트.gif" },
+            { title: "나는 왜 토마토를 맞았을까 <br> 이아형, 하경찬, 7'36", desc: "이별 통보와 함께 <br>토마토를 뒤집어쓴 주연, <br>그녀는 토마토와의 대화를 통해 <br>무너진 관계의 원인을 찾는다.", image: "used photo/나는 왜 토마토를 맞았을까.gif" }
+        ];  
+
+        const container = document.getElementById("movie-list-container");
+
+        movies.forEach(movie => {
+            container.innerHTML += `
+
+            <div class="puzzle-box">
+
+                <div class="box-left" 
+                style="background-image:url('${movie.image}')">
+                </div>
+
+                <div class="box-right">
+                    <h3 style="text-align:center;">
+                        ${movie.title}
+                    </h3>
+
+                    <p style="font-size:15px; text-align:center;">
+                        ${movie.desc}
+                    </p>
+                </div>
+
+            </div>
+            `;
+        });
+    
+        const sounds = [
+            'Sound/click-1.mp3',
+            'Sound/click-2.mp3',
+            'Sound/click-3.mp3',
+            'Sound/click-4.mp3',
+            'Sound/click-5.mp3'
+        ];
+
+        document.querySelectorAll('.puzzle-box').forEach(box => {
+            box.addEventListener('click', () => {
+                const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+                const audio = new Audio(randomSound);
+                audio.volume = 0.5;
+                audio.play().catch(err => {
+                    console.error('오디오 재생 실패:', err);
+                });
+            });
+        });
+
+        const menuBtn = document.getElementById("menuBtn");
+        const sideMenu = document.getElementById("sideMenu");
+
+        menuBtn.addEventListener("click", () => {
+            sideMenu.classList.toggle("active");
+
+            if(menuBtn.classList.contains("fa-bars")){
+                menuBtn.classList.remove("fa-bars");
+                menuBtn.classList.add("fa-xmark");
+            }
+            else{
+                menuBtn.classList.remove("fa-xmark");
+                menuBtn.classList.add("fa-bars");
+            }
+        });
+    </script>
+
+    <footer>
+
+        <div class="footer-container">
+            <div class="footer-left">
+
+                <h3>HANDONG FILM FESTIVAL</h3>
+
+                <p>
+                    Handong Global University<br>
+                    Pohang, Gyeongsangbuk-do, Republic of Korea
+                </p>
+                <p>
+                    Email : hdff@handong.ac.kr
+                </p>
+                <p>
+                    Tel : +82-54-260-1114
+                </p>
+
+            </div>
+
+            <div class="footer-center">
+                <h3>SOCIAL</h3>
+                <a href="https://www.instagram.com/2026_hdff_whatif?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                    Instagram
+                </a>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2026 Handong Film Festival.
+            All Rights Reserved.
+        </div>
+
+    </footer>
+
+</body>
+</html>
+
+
+
+
+	
